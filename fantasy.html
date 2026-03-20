@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fut Fantasy - Dashscore</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,73 +29,183 @@
         <aside class="fantasy-left">
             <div class="panel">
                 <h2>Preencher escalação</h2>
-                <p class="panel-subtitle">Escolha um time para editar</p>
+                <p class="panel-subtitle">Clique no + para adicionar jogadores</p>
 
                 <div class="team-search">
                     <img src="images/search.png" alt="Buscar" class="team-search-icon">
-                    <input type="text" placeholder="Procurar">
+                    <input type="text" id="globalSearch" placeholder="Procurar jogador por nome, time ou país">
                 </div>
 
-                <p class="team-list-title">Preencher com times populares</p>
+                <p class="team-list-title">Times do Brasileirão 2026</p>
 
-                <div class="team-list">
-                    <div class="team-row"><span>🔴⚫</span><span>Flamengo</span></div>
-                    <div class="team-row"><span>🟢</span><span>Palmeiras</span></div>
-                    <div class="team-row"><span>⚫⚪</span><span>Corinthians</span></div>
-                    <div class="team-row"><span>🔴⚪⚫</span><span>São Paulo</span></div>
-                    <div class="team-row"><span>⚫⚪</span><span>Santos</span></div>
+                <div class="team-list" id="teamList">
+                    <div class="team-row" data-team="Flamengo"><span>🔴⚫</span><span>Flamengo</span></div>
+                    <div class="team-row" data-team="Palmeiras"><span>🟢</span><span>Palmeiras</span></div>
+                    <div class="team-row" data-team="Corinthians"><span>⚫⚪</span><span>Corinthians</span></div>
+                    <div class="team-row" data-team="São Paulo"><span>🔴⚪⚫</span><span>São Paulo</span></div>
+                    <div class="team-row" data-team="Santos"><span>⚪⚫</span><span>Santos</span></div>
+                    <div class="team-row" data-team="Botafogo"><span>⚫⚪</span><span>Botafogo</span></div>
+                    <div class="team-row" data-team="Atlético-MG"><span>⚫⚪</span><span>Atlético-MG</span></div>
+                    <div class="team-row" data-team="Grêmio"><span>🔵⚫⚪</span><span>Grêmio</span></div>
+                    <div class="team-row" data-team="Internacional"><span>🔴⚪</span><span>Internacional</span></div>
+                    <div class="team-row" data-team="Cruzeiro"><span>🔵⚪</span><span>Cruzeiro</span></div>
+                    <div class="team-row" data-team="Vasco"><span>⚫⚪❤️</span><span>Vasco</span></div>
+                    <div class="team-row" data-team="Bahia"><span>🔵🔴⚪</span><span>Bahia</span></div>
+                    <div class="team-row" data-team="Fortaleza"><span>🔴⚪🔵</span><span>Fortaleza</span></div>
                 </div>
             </div>
 
             <div class="panel saved-panel">
                 <h2>Escalações salvas</h2>
+                <div id="savedLineups">
+                    <p style="font-size: 13px; color: #e0e0e0;">Nenhuma escalação salva ainda.</p>
+                </div>
             </div>
         </aside>
 
         <section class="fantasy-center-wrap">
-            <div class="builder-title">Criador de escalação Dashscore</div>
+            <div class="builder-title">Criador de escalação Dashscore - Brasileirão 2026</div>
 
             <div class="fantasy-center">
                 <div class="builder-toolbar">
-                    <button class="toolbar-btn dropdown-btn">▼</button>
-                    <button class="toolbar-btn">Clube</button>
-                    <button class="toolbar-btn">País</button>
-                    <button class="toolbar-btn">Valor de transferência</button>
+                    <button class="toolbar-btn dropdown-btn" id="formationBtn">4-3-3</button>
+                    <button class="toolbar-btn" id="filterClubBtn">Clube</button>
+                    <button class="toolbar-btn" id="filterCountryBtn">País</button>
+                    <button class="toolbar-btn" id="filterValueBtn">Valor</button>
                 </div>
 
-                <div class="pitch-dark">
+                <div class="pitch-dark" id="pitch">
                     <div class="center-circle"></div>
                     <div class="penalty-box"></div>
                     <div class="goal-box"></div>
 
-                    <div class="pitch-row attack">
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
+                    <!-- Ataque -->
+                    <div class="pitch-row attack" data-line="attack">
+                        <div class="player-slot" data-position="LW" data-index="0">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="LW">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="ST" data-index="1">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="ST">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="RW" data-index="2">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="RW">+</div>
+                        </div>
                     </div>
 
-                    <div class="pitch-row midfield">
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
+                    <!-- Meio-campo -->
+                    <div class="pitch-row midfield" data-line="midfield">
+                        <div class="player-slot" data-position="LCM" data-index="3">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="LCM">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="CM" data-index="4">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="CM">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="RCM" data-index="5">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="RCM">+</div>
+                        </div>
                     </div>
 
-                    <div class="pitch-row defense">
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
+                    <!-- Defesa -->
+                    <div class="pitch-row defense" data-line="defense">
+                        <div class="player-slot" data-position="LB" data-index="6">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="LB">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="CB" data-index="7">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="CB">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="CB" data-index="8">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="CB2">+</div>
+                        </div>
+
+                        <div class="player-slot" data-position="RB" data-index="9">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="RB">+</div>
+                        </div>
                     </div>
 
-                    <div class="pitch-row goalie">
-                        <div class="player-slot"><div class="player-icon">👤</div><div class="plus-btn">+</div></div>
+                    <!-- Goleiro -->
+                    <div class="pitch-row goalie" data-line="goalie">
+                        <div class="player-slot" data-position="GK" data-index="10">
+                            <div class="player-card empty">
+                                <div class="player-icon">👤</div>
+                                <div class="player-name">Vago</div>
+                                <div class="player-meta">Clique no +</div>
+                                <div class="player-meta">para adicionar</div>
+                            </div>
+                            <div class="plus-btn" data-slot="GK">+</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="builder-footer">
-                    <button class="delete-btn">Excluir</button>
-                    <input type="text" placeholder="Insira o nome da escalação" class="lineup-name">
-                    <button class="save-btn">Salvar</button>
+                    <button class="delete-btn" id="clearLineupBtn">Excluir tudo</button>
+                    <input type="text" placeholder="Insira o nome da escalação" class="lineup-name" id="lineupName">
+                    <button class="save-btn" id="saveLineupBtn">Salvar</button>
                 </div>
             </div>
         </section>
@@ -103,18 +214,36 @@
             <div class="panel info-panel">
                 <h2>Monte seu 11</h2>
                 <p>
-                    Monte seu time dos sonhos! Escolha a próxima escalação do seu time
-                    ou planeje sua janela de transferências do jeito que quiser.
+                    Clique no botão <strong>+</strong> em cada posição para escolher jogadores do Brasileirão 2026.
                 </p>
                 <p>
-                    Para começar, clique em um jogador vazio e procure o atleta que deseja adicionar.
-                    Você também pode selecionar um time para preencher a escalação automaticamente
-                    e depois fazer as alterações que preferir.
+                    Cada jogador mostra sua nacionalidade, clube e posição. Monte o time dos seus sonhos!
+                </p>
+                <p style="margin-top: 12px; font-size: 12px; color: #ffd966;">
+                    ⚽ Dados atualizados - Temporada 2026
                 </p>
             </div>
         </aside>
 
     </main>
+
+    <!-- Modal para lista de jogadores -->
+    <div class="modal-overlay" id="playerModal">
+        <div class="players-modal">
+            <div class="modal-header">
+                <h3>Escolha um jogador</h3>
+                <button class="close-modal" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-search">
+                <input type="text" id="playerSearchInput" placeholder="🔍 Buscar jogador por nome, clube ou nacionalidade...">
+            </div>
+            <div class="players-list" id="playersListContainer">
+                <!-- Lista de jogadores será inserida aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/fantasy.js"></script>
 
 </body>
 </html>
