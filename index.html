@@ -2,8 +2,10 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashscore</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
 
@@ -15,13 +17,14 @@
 
         <div class="search">
             <img src="images/search.png" class="search-icon" alt="Pesquisar">
-            <input type="text" placeholder="Pesquisar jogadores, clubes e seleções">
+            <input type="text" placeholder="Pesquisar jogadores, clubes e seleções" id="homeSearch">
         </div>
 
         <div class="menu-icons">
             <img src="images/shield.png" class="icon" alt="Escudo">
-            <button class="login">ENTRAR</button>
-            <span class="menu-symbol">⭐</span>
+            <button class="login" id="loginBtn">ENTRAR</button>
+            <span class="menu-symbol" id="userInfo" style="display: none;">👤</span>
+            <span class="menu-symbol" id="logoutBtn" style="display: none;">🚪</span>
             <span class="menu-symbol">⚙️</span>
         </div>
     </header>
@@ -44,27 +47,31 @@
                 <p>Monte times, compare jogadores e organize sua escalação de forma rápida e visual.</p>
             </section>
 
-            <section class="card small info-card">
-                <h3>Destaques</h3>
-                <ul>
-                    <li>Busca por jogadores</li>
-                    <li>Filtro por país e clube</li>
-                    <li>Valores de mercado</li>
-                </ul>
+            <section class="card small info-card" id="userStatusCard">
+                <h3>Bem-vindo!</h3>
+                <div id="userStatusContent">
+                    <p>Faça login para salvar suas escalações favoritas e ter acesso a recursos exclusivos!</p>
+                </div>
             </section>
         </div>
 
         <section class="card big-right clubs-card">
             <h2>Clubes e seleções</h2>
-            <div class="club-list">
-                <span>Brasil</span>
-                <span>Flamengo</span>
-                <span>Corinthians</span>
-                <span>Palmeiras</span>
-                <span>Real Madrid</span>
-                <span>Barcelona</span>
-                <span>Manchester City</span>
-                <span>Santos</span>
+            <div class="club-list" id="clubList">
+                <span data-club="brasil">🇧🇷 Brasil</span>
+                <span data-club="flamengo">🔴⚫ Flamengo</span>
+                <span data-club="corinthians">⚫⚪ Corinthians</span>
+                <span data-club="palmeiras">🟢 Palmeiras</span>
+                <span data-club="saopaulo">🔴⚪⚫ São Paulo</span>
+                <span data-club="santos">⚪⚫ Santos</span>
+                <span data-club="botafogo">⚫⚪ Botafogo</span>
+                <span data-club="atletico-mg">⚫⚪ Atlético-MG</span>
+                <span data-club="gremio">🔵⚫⚪ Grêmio</span>
+                <span data-club="internacional">🔴⚪ Internacional</span>
+                <span data-club="cruzeiro">🔵⚪ Cruzeiro</span>
+                <span data-club="vasco">⚫⚪❤️ Vasco</span>
+                <span data-club="bahia">🔵🔴⚪ Bahia</span>
+                <span data-club="vitoria">🔴⚪ Vitória</span>
             </div>
         </section>
     </main>
@@ -72,6 +79,152 @@
     <footer>
         <p>Dashscore © 2026</p>
     </footer>
+
+    <!-- Modal de Login -->
+    <div class="auth-modal-overlay" id="loginModal">
+        <div class="auth-modal">
+            <div class="auth-modal-header">
+                <h2>Entrar na sua conta</h2>
+                <button class="auth-close" id="closeLoginBtn">&times;</button>
+            </div>
+            <div class="auth-modal-body">
+                <form id="loginForm">
+                    <div class="auth-input-group">
+                        <label>Usuário ou Email</label>
+                        <input type="text" id="loginUsername" placeholder="Digite seu usuário ou email" required>
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Senha</label>
+                        <input type="password" id="loginPassword" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="auth-btn-primary">Entrar</button>
+                </form>
+                <p class="auth-switch">Não tem uma conta? <a href="#" id="showRegisterBtn">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Cadastro -->
+    <div class="auth-modal-overlay" id="registerModal">
+        <div class="auth-modal">
+            <div class="auth-modal-header">
+                <h2>Criar conta</h2>
+                <button class="auth-close" id="closeRegisterBtn">&times;</button>
+            </div>
+            <div class="auth-modal-body">
+                <form id="registerForm">
+                    <div class="auth-input-group">
+                        <label>Usuário</label>
+                        <input type="text" id="regUsername" placeholder="Escolha um nome de usuário" required>
+                        <small class="input-hint">Mínimo 3 caracteres</small>
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Senha</label>
+                        <input type="password" id="regPassword" placeholder="Crie uma senha forte" required>
+                        <small class="input-hint" id="passwordHint">
+                            • Mínimo 8 caracteres<br>
+                            • Pelo menos 1 letra maiúscula e 1 minúscula<br>
+                            • Pelo menos 1 caractere especial (!@#$%^&*)<br>
+                            • Não pode conter seu nome de usuário
+                        </small>
+                    </div>
+                    <div class="auth-input-group">
+                        <label>Confirmar Senha</label>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirme sua senha" required>
+                    </div>
+                    <div id="registerError" class="auth-error"></div>
+                    <button type="submit" class="auth-btn-primary">Cadastrar</button>
+                </form>
+                <p class="auth-switch">Já tem uma conta? <a href="#" id="showLoginBtn">Faça login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Navegação para páginas de clubes
+        document.querySelectorAll('.club-list span').forEach(club => {
+            club.addEventListener('click', () => {
+                const clubName = club.dataset.club;
+                window.location.href = `pages/${clubName}.html`;
+            });
+        });
+
+        // Pesquisa global
+        const homeSearch = document.getElementById('homeSearch');
+        if (homeSearch) {
+            homeSearch.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const clubSpans = document.querySelectorAll('.club-list span');
+                clubSpans.forEach(span => {
+                    const text = span.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        span.style.display = 'inline-block';
+                    } else {
+                        span.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Atualizar status do usuário na home
+        function updateUserStatus() {
+            const currentUser = localStorage.getItem('currentUser');
+            const userStatusCard = document.getElementById('userStatusContent');
+            const loginBtn = document.getElementById('loginBtn');
+            const userInfo = document.getElementById('userInfo');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p style="color: #2ecc71;">✅ Logado como: <strong>${user.username}</strong></p>
+                        <p>Email: ${user.email}</p>
+                        <p>Você tem acesso a todas as funcionalidades!</p>
+                    `;
+                }
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (userInfo) {
+                    userInfo.style.display = 'inline-block';
+                    userInfo.textContent = `👤 ${user.username}`;
+                }
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p>Faça login para salvar suas escalações favoritas e ter acesso a recursos exclusivos!</p>
+                        <button class="btn-main" style="padding: 8px 16px; font-size: 14px; margin-top: 10px;" id="quickLoginBtn">Fazer Login</button>
+                    `;
+                    const quickLoginBtn = document.getElementById('quickLoginBtn');
+                    if (quickLoginBtn) {
+                        quickLoginBtn.addEventListener('click', () => {
+                            document.getElementById('loginModal').classList.add('active');
+                        });
+                    }
+                }
+                if (loginBtn) loginBtn.style.display = 'inline-block';
+                if (userInfo) userInfo.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                updateUserStatus();
+                alert('Você saiu da sua conta!');
+            });
+        }
+
+        updateUserStatus();
+    </script>
 
 </body>
 </html>
