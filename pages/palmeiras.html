@@ -57,7 +57,8 @@
     </header>
     <main style="max-width: 1200px; margin: 0 auto; padding: 20px;">
         <a href="../index.html" class="back-btn">← Voltar para página inicial</a>
-        <div class="club-hero"><div class="club-badge">🟢</div><h1>Sociedade Esportiva Palmeiras</h1><p>Academia de Futebol - O Campeão do Século</p><button class="favorite-btn" id="favoriteTeamBtn">⭐ Favoritar Time</button></div>
+        <div class="club-hero"><div class="club-badge"><img src="../images/escudos/escudo-palmeiras.png" alt="Escudo Palmeiras" style="width: 80px; height: 80px; object-fit: contain; border-radius: 50%;"></div>
+        <h1>Sociedade Esportiva Palmeiras</h1><p>Academia de Futebol - O Campeão do Século</p><button class="favorite-btn" id="favoriteTeamBtn">⭐ Favoritar Time</button></div>
         <div class="club-stats"><div class="stat-card"><h3>🏆 Brasileirões</h3><div class="stat-value">12</div><small>Último: 2025</small></div><div class="stat-card"><h3>🌎 Libertadores</h3><div class="stat-value">3</div><small>1999, 2020, 2021</small></div><div class="stat-card"><h3>🏟️ Estádio</h3><div class="stat-value">Allianz</div><small>Capacidade: 43.713</small></div><div class="stat-card"><h3>📅 Fundação</h3><div class="stat-value">1914</div><small>26 de agosto</small></div></div>
         <h2 class="section-title">⭐ Elenco Principal 2026</h2>
         <div class="players-grid" id="playersGrid"></div>
@@ -103,6 +104,65 @@
         window.addEventListener('click', (e) => { if (e.target === loginModal) loginModal.classList.remove('active'); if (e.target === registerModal) registerModal.classList.remove('active'); });
         document.getElementById('loginForm')?.addEventListener('submit', (e) => { e.preventDefault(); const result = loginUser(document.getElementById('loginUsername').value, document.getElementById('loginPassword').value); if (result.success) { loginModal.classList.remove('active'); location.reload(); } else alert(result.message); });
         document.getElementById('registerForm')?.addEventListener('submit', (e) => { e.preventDefault(); const result = registerUser(document.getElementById('regUsername').value, document.getElementById('regEmail').value, document.getElementById('regPassword').value, document.getElementById('regConfirmPassword').value); if (result.success) { alert(result.message); registerModal.classList.remove('active'); loginModal.classList.add('active'); } else { document.getElementById('registerError').textContent = result.message; document.getElementById('registerError').style.display = 'block'; } });
+    function updateUserStatus() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userStatusCard = document.getElementById('userStatusContent');
+            const loginBtn = document.getElementById('loginBtn');
+            const userInfo = document.getElementById('userInfo');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Atualizar favoritos quando o usuário mudar
+            userFavorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+            renderUserFavorites();
+            renderFeaturedPlayers();
+
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p style="color: #2ecc71;">✅ Logado como: <strong>${user.username}</strong></p>
+                        <p>Email: ${user.email}</p>
+                        <p>Você tem acesso a todas as funcionalidades!</p>
+                    `;
+                }
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (userInfo) {
+                    userInfo.style.display = 'inline-block';
+                    userInfo.textContent = `👤 ${user.username}`;
+                }
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p>Faça login para salvar suas escalações favoritas e ter acesso a recursos exclusivos!</p>
+                        <button class="btn-main" style="padding: 8px 16px; font-size: 14px; margin-top: 10px;" id="quickLoginBtn">Fazer Login</button>
+                    `;
+                    const quickLoginBtn = document.getElementById('quickLoginBtn');
+                    if (quickLoginBtn) {
+                        quickLoginBtn.addEventListener('click', () => {
+                            document.getElementById('loginModal').classList.add('active');
+                        });
+                    }
+                }
+                if (loginBtn) loginBtn.style.display = 'inline-block';
+                if (userInfo) userInfo.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+            }
+        }
+        
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('currentUser');
+                updateUserStatus();
+                alert('Você saiu da sua conta!');
+            });
+        }
+        
+        // Inicializar
+        updateUserStatus();
+        renderFeaturedPlayers();
+        setupFilters();
     </script>
 </body>
 </html>

@@ -15,6 +15,7 @@ const playersData = [
     { name: "Agustín Rossi", nationality: "Argentina", club: "Flamengo", position: "GK", value: 10000000, valueStr: "€10M", flag: "🇦🇷", number: 1 },
     { name: "Everton Cebolinha", nationality: "Brasil", club: "Flamengo", position: "LW", value: 7000000, valueStr: "€7M", flag: "🇧🇷", number: 11 },
     { name: "Luiz Araújo", nationality: "Brasil", club: "Flamengo", position: "RW", value: 7000000, valueStr: "€7M", flag: "🇧🇷", number: 7 },
+    { name: "Danilo", nationality: "Brasil", club: "Flamengo", position: "CB", value: 2500000, valueStr: "€2.5M", flag: "🇧🇷", number: 13 },
 
     // PALMEIRAS
     { name: "Vitor Roque", nationality: "Brasil", club: "Palmeiras", position: "ST", value: 45000000, valueStr: "€45M", flag: "🇧🇷", number: 9 },
@@ -68,7 +69,7 @@ const playersData = [
     { name: "Everson", nationality: "Brasil", club: "Atlético-MG", position: "GK", value: 4000000, valueStr: "€4M", flag: "🇧🇷", number: 22 },
 
     // INTERNACIONAL
-    { name: "Borré", nationality: "Colômbia", club: "Internacional", position: "ST", value: 7000000, valueStr: "€7M", flag: "🇨🇴", number: 19 },
+    { name: "Rafael Borré", nationality: "Colômbia", club: "Internacional", position: "ST", value: 7000000, valueStr: "€7M", flag: "🇨🇴", number: 19 },
     { name: "Enner Valencia", nationality: "Equador", club: "Internacional", position: "ST", value: 8000000, valueStr: "€8M", flag: "🇪🇨", number: 13 },
     { name: "Alan Patrick", nationality: "Brasil", club: "Internacional", position: "CAM", value: 9000000, valueStr: "€9M", flag: "🇧🇷", number: 10 },
     { name: "Bernabei", nationality: "Argentina", club: "Internacional", position: "LB", value: 7000000, valueStr: "€7M", flag: "🇦🇷", number: 6 },
@@ -91,6 +92,7 @@ const playersData = [
 
     // VASCO
     { name: "Philippe Coutinho", nationality: "Brasil", club: "Vasco", position: "CAM", value: 8000000, valueStr: "€8M", flag: "🇧🇷", number: 11 },
+    { name: "Dimitri Payet", nationality: "França", club: "Vasco", position: "CAM", value: 5000000, valueStr: "€5M", flag: "🇫🇷", number: 10 },
     { name: "Thiago Mendes", nationality: "Brasil", club: "Vasco", position: "CDM", value: 4000000, valueStr: "€4M", flag: "🇧🇷", number: 5 },
     { name: "Robert Renan", nationality: "Brasil", club: "Vasco", position: "CB", value: 5000000, valueStr: "€5M", flag: "🇧🇷", number: 3 },
     { name: "Piton", nationality: "Brasil", club: "Vasco", position: "LB", value: 4000000, valueStr: "€4M", flag: "🇧🇷", number: 6 },
@@ -106,12 +108,19 @@ const playersData = [
     { name: "Lautaro Díaz", nationality: "Argentina", club: "Santos", position: "ST", value: 6000000, valueStr: "€6M", flag: "🇦🇷", number: 9 },
     { name: "Rollheiser", nationality: "Argentina", club: "Santos", position: "RW", value: 7000000, valueStr: "€7M", flag: "🇦🇷", number: 7 },
     { name: "Gabriel Menino", nationality: "Brasil", club: "Santos", position: "CM", value: 5000000, valueStr: "€5M", flag: "🇧🇷", number: 8 },
-    { name: "Gabriel Brazão", nationality: "Brasil", club: "Santos", position: "GK", value: 4000000, valueStr: "€4M", flag: "🇧🇷", number: 1 }
+    { name: "Gabriel Brazão", nationality: "Brasil", club: "Santos", position: "GK", value: 4000000, valueStr: "€4M", flag: "🇧🇷", number: 1 },
+
+    // VITÓRIA
+    { name: "Erick", nationality: "Brasil", club: "Vitória", position: "ST", value: 2000000, valueStr: "€2M", flag: "🇧🇷", number: 9 },
+    { name: "Aitor", nationality: "Espanha", club: "Vitória", position: "RW", value: 1500000, valueStr: "€1.5M", flag: "🇪🇸", number: 7 },
+    { name: "Ramon", nationality: "Brasil", club: "Vitória", position: "CM", value: 1000000, valueStr: "€1M", flag: "🇧🇷", number: 8 },
+    { name: "Riccieli", nationality: "Brasil", club: "Vitória", position: "CB", value: 1000000, valueStr: "€1M", flag: "🇧🇷", number: 4 },
+    { name: "Gabriel", nationality: "Brasil", club: "Vitória", position: "GK", value: 800000, valueStr: "€800k", flag: "🇧🇷", number: 1 }
 ];
 
 // Variáveis globais
 let currentSlot = null;
-let currentLineup = Array(11).fill(null);
+let currentLineup = Array(18).fill(null);
 let savedLineups = JSON.parse(localStorage.getItem('fantasyLineups') || '[]');
 let currentFilterTeam = "";
 let currentFormation = "4-3-3";
@@ -132,10 +141,8 @@ function getNumericValue(valueStr) {
 // Função para filtrar jogadores por valor
 function filterByValue(players, range) {
     if (range === "all") return players;
-    
     return players.filter(player => {
         const value = getNumericValue(player.valueStr);
-        
         switch(range) {
             case "0-5": return value < 5000000;
             case "5-10": return value >= 5000000 && value < 10000000;
@@ -156,7 +163,6 @@ function renderPlayersList(filter = "", teamFilter = "") {
 
     let filtered = playersData;
     
-    // Filtro por texto
     if (filter) {
         filtered = filtered.filter(p =>
             p.name.toLowerCase().includes(filter.toLowerCase()) ||
@@ -165,19 +171,16 @@ function renderPlayersList(filter = "", teamFilter = "") {
         );
     }
     
-    // Filtro por time
     if (teamFilter) {
         filtered = filtered.filter(p => p.club === teamFilter);
     } else if (currentClubFilter !== "all") {
         filtered = filtered.filter(p => p.club === currentClubFilter);
     }
     
-    // Filtro por país
     if (currentCountryFilter !== "all") {
         filtered = filtered.filter(p => p.nationality === currentCountryFilter);
     }
     
-    // Filtro por valor
     filtered = filterByValue(filtered, currentValueRange);
 
     if (filtered.length === 0) {
@@ -219,7 +222,6 @@ function changeFormation(formation) {
     const midfieldRow = document.getElementById("midfieldRow");
     const defenseRow = document.getElementById("defenseRow");
     
-    // Limpar todos os slots atuais
     const allSlots = document.querySelectorAll(".player-slot");
     allSlots.forEach(slot => {
         const playerCard = slot.querySelector(".player-card");
@@ -229,13 +231,12 @@ function changeFormation(formation) {
             <div class="player-icon">👤</div>
             <div class="player-name">Vago</div>
             <div class="player-meta">Clique no +</div>
-            <div class="player-meta">para adicionar</div>
+            <div class="player-meta">adicionar</div>
         `;
     });
     
-    currentLineup = Array(11).fill(null);
+    currentLineup = Array(18).fill(null);
     
-    // Configurar nova formação
     const formations = {
         "4-3-3": { attack: 3, midfield: 3, defense: 4 },
         "4-4-2": { attack: 2, midfield: 4, defense: 4 },
@@ -250,12 +251,9 @@ function changeFormation(formation) {
     const config = formations[formation];
     if (!config) return;
     
-    // Ajustar visual das linhas
     adjustRowDisplay(attackRow, config.attack);
     adjustRowDisplay(midfieldRow, config.midfield);
     adjustRowDisplay(defenseRow, config.defense);
-    
-    // Reindexar os slots
     reindexSlots();
 }
 
@@ -272,47 +270,29 @@ function adjustRowDisplay(row, count) {
 }
 
 function reindexSlots() {
-    const allSlots = document.querySelectorAll(".player-slot");
+    const allSlots = document.querySelectorAll(".player-slot:not(.hidden-slot)");
     allSlots.forEach((slot, newIndex) => {
         slot.setAttribute("data-index", newIndex);
-        const oldLineup = [...currentLineup];
-        if (oldLineup[newIndex]) {
-            const player = oldLineup[newIndex];
-            const playerCard = slot.querySelector(".player-card");
-            playerCard.classList.remove("empty");
-            playerCard.classList.add("filled");
-            playerCard.innerHTML = `
-                <div class="player-icon">${player.flag || "👤"}</div>
-                <div class="player-name">${player.name}</div>
-                <div class="player-meta">${player.club}</div>
-                <div class="player-meta">${player.nationality} • ${player.valueStr}</div>
-            `;
-        }
     });
 }
 
-// Adicionar jogador ao slot selecionado
+// Função para adicionar jogador - NOME COMPLETO
 function addPlayerToSlot(player) {
     if (!currentSlot) return;
-
     const slotElement = currentSlot;
     const playerCard = slotElement.querySelector(".player-card");
-    const allSlots = document.querySelectorAll(".player-slot");
+    const allSlots = document.querySelectorAll(".player-slot:not(.hidden-slot)");
     const index = Array.from(allSlots).indexOf(slotElement);
-
-    if (index !== -1) {
-        currentLineup[index] = player;
-    }
-
+    if (index !== -1) currentLineup[index] = player;
+    
     playerCard.classList.remove("empty");
     playerCard.classList.add("filled");
     playerCard.innerHTML = `
         <div class="player-icon">${player.flag || "👤"}</div>
-        <div class="player-name">${player.name}</div>
-        <div class="player-meta">${player.club}</div>
-        <div class="player-meta">${player.nationality} • ${player.valueStr}</div>
+        <div class="player-name" title="${player.name}">${player.name}</div>
+        <div class="player-meta" title="${player.club}">${player.club}</div>
+        <div class="player-meta" title="${player.nationality} • ${player.valueStr}">${player.nationality} • ${player.valueStr}</div>
     `;
-
     const modal = document.getElementById("playerModal");
     if (modal) modal.classList.remove("active");
     currentSlot = null;
@@ -320,7 +300,7 @@ function addPlayerToSlot(player) {
 
 // Limpar escalação
 function clearLineup() {
-    currentLineup = Array(11).fill(null);
+    currentLineup = Array(18).fill(null);
     const allSlots = document.querySelectorAll(".player-slot");
     allSlots.forEach((slot) => {
         const playerCard = slot.querySelector(".player-card");
@@ -330,7 +310,7 @@ function clearLineup() {
             <div class="player-icon">👤</div>
             <div class="player-name">Vago</div>
             <div class="player-meta">Clique no +</div>
-            <div class="player-meta">para adicionar</div>
+            <div class="player-meta">adicionar</div>
         `;
     });
 }
@@ -394,30 +374,24 @@ function renderSavedLineups() {
     });
 }
 
-// Carregar escalação salva
+// Função para carregar escalação salva - NOME COMPLETO
 function loadLineup(id) {
     const lineup = savedLineups.find(l => l.id === id);
     if (!lineup) return;
-
-    if (lineup.formation && lineup.formation !== currentFormation) {
-        changeFormation(lineup.formation);
-    }
-
+    if (lineup.formation && lineup.formation !== currentFormation) changeFormation(lineup.formation);
     currentLineup = [...lineup.players];
-    const allSlots = document.querySelectorAll(".player-slot");
-
+    const allSlots = document.querySelectorAll(".player-slot:not(.hidden-slot)");
     allSlots.forEach((slot, index) => {
         const player = currentLineup[index];
         const playerCard = slot.querySelector(".player-card");
-
         if (player) {
             playerCard.classList.remove("empty");
             playerCard.classList.add("filled");
             playerCard.innerHTML = `
                 <div class="player-icon">${player.flag || "👤"}</div>
-                <div class="player-name">${player.name}</div>
-                <div class="player-meta">${player.club}</div>
-                <div class="player-meta">${player.nationality} • ${player.valueStr}</div>
+                <div class="player-name" title="${player.name}">${player.name}</div>
+                <div class="player-meta" title="${player.club}">${player.club}</div>
+                <div class="player-meta" title="${player.nationality} • ${player.valueStr}">${player.nationality} • ${player.valueStr}</div>
             `;
         } else {
             playerCard.classList.remove("filled");
@@ -426,11 +400,10 @@ function loadLineup(id) {
                 <div class="player-icon">👤</div>
                 <div class="player-name">Vago</div>
                 <div class="player-meta">Clique no +</div>
-                <div class="player-meta">para adicionar</div>
+                <div class="player-meta">adicionar</div>
             `;
         }
     });
-
     const nameInput = document.getElementById("lineupName");
     if (nameInput) nameInput.value = lineup.name;
     alert(`Escalação "${lineup.name}" carregada!`);
@@ -449,12 +422,11 @@ function closeFilterModal(modalId) {
 
 // Configurar eventos
 function setupEventListeners() {
-    // Botões + (abrir modal para escolher jogador)
     document.querySelectorAll(".plus-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
             e.stopPropagation();
             const slot = btn.closest(".player-slot");
-            if (slot) {
+            if (slot && slot.style.display !== "none") {
                 currentSlot = slot;
                 const searchInput = document.getElementById("playerSearchInput");
                 if (searchInput) {
@@ -468,7 +440,6 @@ function setupEventListeners() {
         });
     });
 
-    // Botão de formação
     const formationBtn = document.getElementById("formationBtn");
     if (formationBtn) {
         formationBtn.addEventListener("click", () => {
@@ -476,7 +447,6 @@ function setupEventListeners() {
         });
     }
 
-    // Opções de formação
     document.querySelectorAll(".formation-option").forEach(opt => {
         opt.addEventListener("click", () => {
             const formation = opt.dataset.formation;
@@ -485,7 +455,6 @@ function setupEventListeners() {
         });
     });
 
-    // Botão de filtro por clube
     const clubBtn = document.getElementById("filterClubBtn");
     if (clubBtn) {
         clubBtn.addEventListener("click", () => {
@@ -493,7 +462,6 @@ function setupEventListeners() {
         });
     }
 
-    // Opções de clube
     document.querySelectorAll("#clubFilterList .filter-option").forEach(opt => {
         opt.addEventListener("click", () => {
             currentClubFilter = opt.dataset.club;
@@ -510,7 +478,6 @@ function setupEventListeners() {
         });
     });
 
-    // Botão de filtro por país
     const countryBtn = document.getElementById("filterCountryBtn");
     if (countryBtn) {
         countryBtn.addEventListener("click", () => {
@@ -518,7 +485,6 @@ function setupEventListeners() {
         });
     }
 
-    // Opções de país
     document.querySelectorAll("#countryFilterList .filter-option").forEach(opt => {
         opt.addEventListener("click", () => {
             currentCountryFilter = opt.dataset.country;
@@ -535,7 +501,6 @@ function setupEventListeners() {
         });
     });
 
-    // Botão de filtro por valor
     const valueBtn = document.getElementById("filterValueBtn");
     if (valueBtn) {
         valueBtn.addEventListener("click", () => {
@@ -543,7 +508,6 @@ function setupEventListeners() {
         });
     }
 
-    // Opções de valor
     document.querySelectorAll("#valueFilterList .filter-option").forEach(opt => {
         opt.addEventListener("click", () => {
             currentValueRange = opt.dataset.value;
@@ -554,7 +518,6 @@ function setupEventListeners() {
         });
     });
 
-    // Fechar modais
     document.querySelectorAll(".close-modal, .close-formation, .close-club, .close-country, .close-value").forEach(btn => {
         btn.addEventListener("click", () => {
             const modal = btn.closest(".modal-overlay");
@@ -562,7 +525,6 @@ function setupEventListeners() {
         });
     });
 
-    // Clicar fora do modal
     document.querySelectorAll(".modal-overlay").forEach(modal => {
         modal.addEventListener("click", (e) => {
             if (e.target === modal) {
@@ -571,7 +533,6 @@ function setupEventListeners() {
         });
     });
 
-    // Busca no modal
     const searchInput = document.getElementById("playerSearchInput");
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
@@ -579,7 +540,6 @@ function setupEventListeners() {
         });
     }
 
-    // Busca global na lateral
     const globalSearch = document.getElementById("globalSearch");
     if (globalSearch) {
         globalSearch.addEventListener("input", (e) => {
@@ -595,7 +555,6 @@ function setupEventListeners() {
         });
     }
 
-    // Times populares na lateral
     document.querySelectorAll(".team-row").forEach(team => {
         team.addEventListener("click", () => {
             const teamName = team.querySelector("span:last-child").textContent;
@@ -613,13 +572,11 @@ function setupEventListeners() {
         });
     });
 
-    // Limpar escalação
     const clearBtn = document.getElementById("clearLineupBtn");
     if (clearBtn) {
         clearBtn.addEventListener("click", clearLineup);
     }
 
-    // Salvar escalação
     const saveBtn = document.getElementById("saveLineupBtn");
     if (saveBtn) {
         saveBtn.addEventListener("click", saveLineup);

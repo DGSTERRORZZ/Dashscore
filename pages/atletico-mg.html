@@ -55,19 +55,46 @@
         <div class="search"><img src="../images/search.png" class="search-icon" alt="Pesquisar"><input type="text" placeholder="Pesquisar jogadores, clubes e seleções"></div>
         <div class="menu-icons"><img src="../images/shield.png" class="icon" alt="Escudo"><button class="login" id="loginBtn">ENTRAR</button><span class="menu-symbol" id="userInfo" style="display: none;">👤</span><span class="menu-symbol" id="logoutBtn" style="display: none;">🚪</span><span class="menu-symbol">⚙️</span></div>
     </header>
-    <main style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-        <a href="../index.html" class="back-btn">← Voltar para página inicial</a>
-        <div class="club-hero"><div class="club-badge">⚫⚪</div><h1>Atlético Mineiro</h1><p>O Galo Forte - Campeão da América</p><button class="favorite-btn" id="favoriteTeamBtn">⭐ Favoritar Time</button></div>
-        <div class="club-stats"><div class="stat-card"><h3>🏆 Brasileirões</h3><div class="stat-value">3</div><small>1971, 2021, 2024</small></div><div class="stat-card"><h3>🌎 Libertadores</h3><div class="stat-value">1</div><small>2013</small></div><div class="stat-card"><h3>🏟️ Estádio</h3><div class="stat-value">Arena MRV</div><small>Capacidade: 46.000</small></div><div class="stat-card"><h3>📅 Fundação</h3><div class="stat-value">1908</div><small>25 de março</small></div></div>
-        <h2 class="section-title">⭐ Elenco Principal 2026</h2>
-        <div class="players-grid" id="playersGrid"></div>
-        <h2 class="section-title">🔄 Últimas Transferências</h2>
-        <div class="transfers-list"><div class="transfer-item"><span><strong>Dudu</strong> (Atacante)</span><span>➡️ Chegada - €8M</span><span>Palmeiras → Atlético-MG</span></div><div class="transfer-item"><span><strong>Bernard</strong> (Atacante)</span><span>➡️ Chegada - Livre</span><span>Panathinaikos → Atlético-MG</span></div><div class="transfer-item"><span><strong>Alan Franco</strong> (Volante)</span><span>➡️ Chegada - €6M</span><span>São Paulo → Atlético-MG</span></div><div class="transfer-item"><span><strong>Maycon</strong> (Volante)</span><span>➡️ Chegada - €5M</span><span>Corinthians → Atlético-MG</span></div><div class="transfer-item"><span><strong>Paulinho</strong> (Atacante)</span><span>➡️ Permanência</span><span>Renovação até 2028</span></div></div>
-        <h2 class="section-title">📖 História</h2>
-        <div class="history-text"><p>Fundado em 25 de março de 1908, o Atlético Mineiro é um dos clubes mais tradicionais de Minas Gerais e do Brasil. Conhecido como "Galo", o clube tem uma das torcidas mais apaixonadas do país.</p><p style="margin-top: 15px;">O ano de 2013 foi mágico para o Atlético, conquistando a Copa Libertadores da América de forma invicta, com uma campanha histórica. Em 2021, o Galo conquistou o "Triplete": Brasileirão, Copa do Brasil e Campeonato Mineiro.</p><p style="margin-top: 15px;">Em 2024, o Atlético voltou a conquistar o Campeonato Brasileiro, consolidando sua posição entre os grandes do futebol nacional. A Arena MRV, inaugurada em 2023, é a moderna casa do Galo.</p></div>
-        <h2 class="section-title">✨ Curiosidades</h2>
-        <div class="curiosities-list"><div class="curiosity-item"><strong>🏆 Invencibilidade na Libertadores</strong><p>Em 2013, o Atlético foi campeão invicto da Libertadores.</p></div><div class="curiosity-item"><strong>⚽ Maior artilheiro</strong><p>Reinaldo, com 255 gols entre 1973-1985.</p></div><div class="curiosity-item"><strong>🌟 Hulk</strong><p>O ídolo moderno marcou mais de 100 gols pelo clube e foi campeão de tudo.</p></div><div class="curiosity-item"><strong>🎵 Hino</strong><p>"Nós somos o Galo forte e vencedor..."</p></div></div>
-    </main>
+   <main style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+    <a href="../index.html" class="back-btn">← Voltar para página inicial</a>
+    <div class="club-hero">
+        <div class="club-badge">
+            <img src="../images/escudos/escudo-atletico-mg.png" alt="Escudo Atlético-MG" style="width: 80px; height: 80px; object-fit: contain;">
+        </div>
+        <h1>Atlético Mineiro</h1>
+        <p>O Galo Forte - Campeão da América</p>
+        <button class="favorite-btn" id="favoriteTeamBtn">⭐ Favoritar Time</button>
+    </div>
+    <div class="club-stats">
+        <div class="stat-card"><h3>🏆 Brasileirões</h3><div class="stat-value">3</div><small>1971, 2021, 2024</small></div>
+        <div class="stat-card"><h3>🌎 Libertadores</h3><div class="stat-value">1</div><small>2013</small></div>
+        <div class="stat-card"><h3>🏟️ Estádio</h3><div class="stat-value">Arena MRV</div><small>Capacidade: 46.000</small></div>
+        <div class="stat-card"><h3>📅 Fundação</h3><div class="stat-value">1908</div><small>25 de março</small></div>
+    </div>
+    <h2 class="section-title">⭐ Elenco Principal 2026</h2>
+    <div class="players-grid" id="playersGrid"></div>
+    <h2 class="section-title">🔄 Últimas Transferências</h2>
+    <div class="transfers-list">
+        <div class="transfer-item"><span><strong>Dudu</strong> (Atacante)</span><span>➡️ Chegada - €8M</span><span>Palmeiras → Atlético-MG</span></div>
+        <div class="transfer-item"><span><strong>Bernard</strong> (Atacante)</span><span>➡️ Chegada - Livre</span><span>Panathinaikos → Atlético-MG</span></div>
+        <div class="transfer-item"><span><strong>Alan Franco</strong> (Volante)</span><span>➡️ Chegada - €6M</span><span>São Paulo → Atlético-MG</span></div>
+        <div class="transfer-item"><span><strong>Maycon</strong> (Volante)</span><span>➡️ Chegada - €5M</span><span>Corinthians → Atlético-MG</span></div>
+        <div class="transfer-item"><span><strong>Paulinho</strong> (Atacante)</span><span>➡️ Permanência</span><span>Renovação até 2028</span></div>
+    </div>
+    <h2 class="section-title">📖 História</h2>
+    <div class="history-text">
+        <p>Fundado em 25 de março de 1908, o Atlético Mineiro é um dos clubes mais tradicionais de Minas Gerais e do Brasil. Conhecido como "Galo", o clube tem uma das torcidas mais apaixonadas do país.</p>
+        <p style="margin-top: 15px;">O ano de 2013 foi mágico para o Atlético, conquistando a Copa Libertadores da América de forma invicta, com uma campanha histórica. Em 2021, o Galo conquistou o "Triplete": Brasileirão, Copa do Brasil e Campeonato Mineiro.</p>
+        <p style="margin-top: 15px;">Em 2024, o Atlético voltou a conquistar o Campeonato Brasileiro, consolidando sua posição entre os grandes do futebol nacional. A Arena MRV, inaugurada em 2023, é a moderna casa do Galo.</p>
+    </div>
+    <h2 class="section-title">✨ Curiosidades</h2>
+    <div class="curiosities-list">
+        <div class="curiosity-item"><strong>🏆 Invencibilidade na Libertadores</strong><p>Em 2013, o Atlético foi campeão invicto da Libertadores.</p></div>
+        <div class="curiosity-item"><strong>⚽ Maior artilheiro</strong><p>Reinaldo, com 255 gols entre 1973-1985.</p></div>
+        <div class="curiosity-item"><strong>🌟 Hulk</strong><p>O ídolo moderno marcou mais de 100 gols pelo clube e foi campeão de tudo.</p></div>
+        <div class="curiosity-item"><strong>🎵 Hino</strong><p>"Nós somos o Galo forte e vencedor..."</p></div>
+    </div>
+</main>
     <footer style="text-align: center; padding: 20px; margin-top: 40px;"><p>Dashscore © 2026</p></footer>
     
     <div class="auth-modal-overlay" id="loginModal"><div class="auth-modal"><div class="auth-modal-header"><h2>Entrar</h2><button class="auth-close" id="closeLoginBtn">&times;</button></div><div class="auth-modal-body"><form id="loginForm"><div class="auth-input-group"><label>Usuário ou Email</label><input type="text" id="loginUsername" required></div><div class="auth-input-group"><label>Senha</label><input type="password" id="loginPassword" required></div><button type="submit" class="auth-btn-primary">Entrar</button></form><p class="auth-switch">Não tem conta? <a href="#" id="showRegisterBtn">Cadastre-se</a></p></div></div></div>
@@ -102,6 +129,65 @@
         window.addEventListener('click', (e) => { if (e.target === loginModal) loginModal.classList.remove('active'); if (e.target === registerModal) registerModal.classList.remove('active'); });
         document.getElementById('loginForm')?.addEventListener('submit', (e) => { e.preventDefault(); const result = loginUser(document.getElementById('loginUsername').value, document.getElementById('loginPassword').value); if (result.success) { loginModal.classList.remove('active'); location.reload(); } else alert(result.message); });
         document.getElementById('registerForm')?.addEventListener('submit', (e) => { e.preventDefault(); const result = registerUser(document.getElementById('regUsername').value, document.getElementById('regEmail').value, document.getElementById('regPassword').value, document.getElementById('regConfirmPassword').value); if (result.success) { alert(result.message); registerModal.classList.remove('active'); loginModal.classList.add('active'); } else { document.getElementById('registerError').textContent = result.message; document.getElementById('registerError').style.display = 'block'; } });
+    function updateUserStatus() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userStatusCard = document.getElementById('userStatusContent');
+            const loginBtn = document.getElementById('loginBtn');
+            const userInfo = document.getElementById('userInfo');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            // Atualizar favoritos quando o usuário mudar
+            userFavorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+            renderUserFavorites();
+            renderFeaturedPlayers();
+
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p style="color: #2ecc71;">✅ Logado como: <strong>${user.username}</strong></p>
+                        <p>Email: ${user.email}</p>
+                        <p>Você tem acesso a todas as funcionalidades!</p>
+                    `;
+                }
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (userInfo) {
+                    userInfo.style.display = 'inline-block';
+                    userInfo.textContent = `👤 ${user.username}`;
+                }
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                if (userStatusCard) {
+                    userStatusCard.innerHTML = `
+                        <p>Faça login para salvar suas escalações favoritas e ter acesso a recursos exclusivos!</p>
+                        <button class="btn-main" style="padding: 8px 16px; font-size: 14px; margin-top: 10px;" id="quickLoginBtn">Fazer Login</button>
+                    `;
+                    const quickLoginBtn = document.getElementById('quickLoginBtn');
+                    if (quickLoginBtn) {
+                        quickLoginBtn.addEventListener('click', () => {
+                            document.getElementById('loginModal').classList.add('active');
+                        });
+                    }
+                }
+                if (loginBtn) loginBtn.style.display = 'inline-block';
+                if (userInfo) userInfo.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+            }
+        }
+        
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('currentUser');
+                updateUserStatus();
+                alert('Você saiu da sua conta!');
+            });
+        }
+        
+        // Inicializar
+        updateUserStatus();
+        renderFeaturedPlayers();
+        setupFilters();
     </script>
 </body>
 </html>
