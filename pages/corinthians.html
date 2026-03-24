@@ -76,14 +76,14 @@
 
     <script>
         const corinthiansSquad = [
-            { name: "Hugo Souza", position: "Goleiro", number: 1 }, { name: "Matheus Donelli", position: "Goleiro", number: 32 },
-            { name: "Matheuzinho", position: "Lateral Direito", number: 23 }, { name: "Fagner", position: "Lateral Direito", number: 23 },
-            { name: "André Ramalho", position: "Zagueiro", number: 5 }, { name: "Gustavo Henrique", position: "Zagueiro", number: 3 }, { name: "Cacá", position: "Zagueiro", number: 4 }, { name: "Félix Torres", position: "Zagueiro", number: 13 },
-            { name: "Matheus Bidu", position: "Lateral Esquerdo", number: 21 }, { name: "Hugo", position: "Lateral Esquerdo", number: 6 },
-            { name: "Raniele", position: "Volante", number: 14 }, { name: "Charles", position: "Volante", number: 24 }, { name: "Breno Bidon", position: "Volante", number: 27 },
-            { name: "Rodrigo Garro", position: "Meia", number: 10 }, { name: "Matheus Pereira", position: "Meia", number: 7 }, { name: "André Carrillo", position: "Meia", number: 18 },
-            { name: "Memphis Depay", position: "Ponta", number: 94 }, { name: "Vitinho", position: "Ponta", number: 11 }, { name: "Romero", position: "Ponta", number: 19 },
-            { name: "Yuri Alberto", position: "Centroavante", number: 9 }, { name: "Pedro Raul", position: "Centroavante", number: 19 }, { name: "Talles Magno", position: "Atacante", number: 17 }
+            { name: "Hugo Souza", position: "Goleiro", number: 1 }, { name: "Matheus Donelli", position: "Goleiro", number: 32 },{ name: "Felipe Longo", position: "Goleiro", number: 40 },
+            { name: "Matheuzinho", position: "Lateral Direito", number: 23 }, { name: "Milans", position: "Lateral Direito", number: 23 },
+            { name: "André Ramalho", position: "Zagueiro", number: 5 }, { name: "Gustavo Henrique", position: "Zagueiro", number: 3 }, { name: "Gabriel Paulista", position: "Zagueiro", number: 4 }, { name: "Tchoca", position: "Zagueiro", number: 13 },
+            { name: "Matheus Bidu", position: "Lateral Esquerdo", number: 21 }, { name: "Angileri", position: "Lateral Esquerdo", number: 6 },{ name: "Hugo", position: "Lateral Esquerdo", number: 45 },
+            { name: "Raniele", position: "Volante", number: 14 }, { name: "Charles", position: "Volante", number: 24 }, { name: "Breno Bidon", position: "Volante", number: 7 },
+            { name: "Rodrigo Garro", position: "Meia", number: 8 }, { name: "Matheus Pereira", position: "Meia", number: 56 }, { name: "André Carrillo", position: "Meia", number: 18 },
+            { name: "Memphis Depay", position: "Ponta", number: 10 }, { name: "Vitinho", position: "Ponta", number: 11 }, { name: "Kaio Cesar", position: "Ponta", number: 19 },
+            { name: "Yuri Alberto", position: "Centroavante", number: 9 }, { name: "Pedro Raul", position: "Centroavante", number: 19 }, { name: "Gui Negão", position: "Atacante", number: 17 }
         ];
         const playersGrid = document.getElementById('playersGrid');
         if (playersGrid) { playersGrid.innerHTML = corinthiansSquad.map(player => `<div class="player-card-club"><div class="player-avatar">${player.number}</div><div class="player-info-club"><h4>${player.name}</h4><p>${player.position}</p></div></div>`).join(''); }

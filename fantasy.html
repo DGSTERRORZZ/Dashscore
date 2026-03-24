@@ -6,6 +6,43 @@
     <title>Fut Fantasy - Dashscore</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
+    <style>
+        /* Estilos adicionais para o filtro de posição */
+        .filter-option.position-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .position-badge-filter {
+            background: #ff8c00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .player-card .player-icon img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .player-card .player-icon {
+            padding: 0;
+            overflow: hidden;
+        }
+        .player-item .player-avatar-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .player-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+    </style>
 </head>
 <body class="fantasy-body">
 
@@ -48,7 +85,7 @@
                     <div class="team-row" data-team="Botafogo"><img src="images/escudos/escudo-botafogo.png" class="team-shield-icon" alt="Botafogo"><span>Botafogo</span></div>
                     <div class="team-row" data-team="Atlético-MG"><img src="images/escudos/escudo-atletico-mg.png" class="team-shield-icon" alt="Atlético-MG"><span>Atlético-MG</span></div>
                     <div class="team-row" data-team="Grêmio"><img src="images/escudos/escudo-gremio.png" class="team-shield-icon" alt="Grêmio"><span>Grêmio</span></div>
-                    <div class="team-row" data-team="Internacional"><img src="images/escudos/escudo-inter.png" class="team-shield-icon" alt="Internacional"><span>Internacional</span></div>
+                    <div class="team-row" data-team="Internacional"><img src="images/escudos/escudo-internacional.png" class="team-shield-icon" alt="Internacional"><span>Internacional</span></div>
                     <div class="team-row" data-team="Cruzeiro"><img src="images/escudos/escudo-cruzeiro.png" class="team-shield-icon" alt="Cruzeiro"><span>Cruzeiro</span></div>
                     <div class="team-row" data-team="Vasco"><img src="images/escudos/escudo-vasco.png" class="team-shield-icon" alt="Vasco"><span>Vasco</span></div>
                     <div class="team-row" data-team="Bahia"><img src="images/escudos/escudo-bahia.png" class="team-shield-icon" alt="Bahia"><span>Bahia</span></div>
@@ -73,6 +110,7 @@
                     <button class="toolbar-btn" id="filterClubBtn">Clube</button>
                     <button class="toolbar-btn" id="filterCountryBtn">País</button>
                     <button class="toolbar-btn" id="filterValueBtn">Valor</button>
+                    <button class="toolbar-btn" id="filterPositionBtn">Posição</button>
                 </div>
 
                 <div class="pitch-dark" id="pitch">
@@ -274,7 +312,7 @@
                     Clique no botão <strong>+</strong> em cada posição para escolher jogadores do Brasileirão 2026.
                 </p>
                 <p>
-                    Use os filtros para encontrar jogadores por formação, clube, país ou valor.
+                    Use os filtros para encontrar jogadores por formação, clube, país, valor ou posição.
                 </p>
                 <p style="margin-top: 12px; font-size: 12px; color: #ffd966;">
                     ⚽ Dados atualizados - Temporada 2026
@@ -391,6 +429,29 @@
         </div>
     </div>
 
+    <!-- Modal para filtro de posição -->
+    <div class="modal-overlay" id="positionFilterModal">
+        <div class="small-modal">
+            <div class="modal-header">
+                <h3>Filtrar por posição</h3>
+                <button class="close-modal close-position">&times;</button>
+            </div>
+            <div class="filter-list" id="positionFilterList">
+                <button class="filter-option position-option" data-position="all">⚽ Todas as posições</button>
+                <button class="filter-option position-option" data-position="GK"><span class="position-badge-filter">GK</span> Goleiro</button>
+                <button class="filter-option position-option" data-position="CB"><span class="position-badge-filter">CB</span> Zagueiro</button>
+                <button class="filter-option position-option" data-position="LB"><span class="position-badge-filter">LB</span> Lateral Esquerdo</button>
+                <button class="filter-option position-option" data-position="RB"><span class="position-badge-filter">RB</span> Lateral Direito</button>
+                <button class="filter-option position-option" data-position="CDM"><span class="position-badge-filter">CDM</span> Volante</button>
+                <button class="filter-option position-option" data-position="CM"><span class="position-badge-filter">CM</span> Meia Central</button>
+                <button class="filter-option position-option" data-position="CAM"><span class="position-badge-filter">CAM</span> Meia Atacante</button>
+                <button class="filter-option position-option" data-position="LW"><span class="position-badge-filter">LW</span> Ponta Esquerda</button>
+                <button class="filter-option position-option" data-position="RW"><span class="position-badge-filter">RW</span> Ponta Direita</button>
+                <button class="filter-option position-option" data-position="ST"><span class="position-badge-filter">ST</span> Centroavante</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modais de autenticação -->
     <div class="auth-modal-overlay" id="loginModal">
         <div class="auth-modal">
@@ -448,36 +509,6 @@
     </div>
 
     <script src="js/fantasy.js"></script>
-<script>
-    function updateUserStatus() {
-        const currentUser = sessionStorage.getItem('currentUser');
-        const loginBtn = document.getElementById('loginBtn');
-        const userInfo = document.getElementById('userInfo');
-        const logoutBtn = document.getElementById('logoutBtn');
 
-        if (currentUser) {
-            const user = JSON.parse(currentUser);
-            if (loginBtn) loginBtn.style.display = 'none';
-            if (userInfo) {
-                userInfo.style.display = 'inline-block';
-                userInfo.textContent = `👤 ${user.username}`;
-            }
-            if (logoutBtn) logoutBtn.style.display = 'inline-block';
-        } else {
-            if (loginBtn) loginBtn.style.display = 'inline-block';
-            if (userInfo) userInfo.style.display = 'none';
-            if (logoutBtn) logoutBtn.style.display = 'none';
-        }
-    }
-
-    document.getElementById('logoutBtn')?.addEventListener('click', () => {
-        sessionStorage.removeItem('currentUser');
-        updateUserStatus();
-        alert('Você saiu da sua conta!');
-        location.reload();
-    });
-
-    updateUserStatus();
-</script>
 </body>
 </html>
